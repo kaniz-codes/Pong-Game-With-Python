@@ -5,6 +5,7 @@ Demonstration of what I've exercised as far as I learned!
 #Steps are given below as Flow Chart
 ![board-adorable-unicorn](https://github.com/kaniz-codes/Pong-Game-With-Python/assets/138873297/9255bcfa-8a4d-41bb-930f-8c8af752a110)
 
+![image](https://github.com/kaniz-codes/Pong-Game-With-Python/assets/138873297/8adf5f97-34a5-41e9-9a8c-f60dc1a3aa8d)
 
 
 *Before Setting up border for the Left and Right Paddles
