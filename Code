@@ -1,0 +1,140 @@
+import turtle as t
+playerAscore = 0
+playerBscore = 0
+
+
+window = t.Screen()
+window.title("Pong Game")
+window.bgcolor("black")
+window.setup(width=800,height=600)
+window.tracer(0)
+
+#creating left paddle
+leftpaddle= t.Turtle()
+leftpaddle.speed(0)
+leftpaddle.shape("square")
+leftpaddle.color("white")
+leftpaddle.shapesize(stretch_wid=5, stretch_len=1)
+leftpaddle.penup()
+leftpaddle.goto(-350,0)
+
+
+#creating Right paddle
+rightpaddle= t.Turtle()
+rightpaddle.speed(0)
+rightpaddle.shape("square")
+rightpaddle.color("White")
+rightpaddle.shapesize(stretch_wid=5, stretch_len=1)
+rightpaddle.penup()
+rightpaddle.goto(350,0)
+
+#creat Ball
+
+ball = t.Turtle()
+ball.speed(-2)
+ball.shape("circle")
+ball.color("red")
+ball.penup()
+ball.goto(5,5)
+ballxdirection= 0.2
+ballydirection= 0.2
+
+#creating pen for scorecard update
+
+pen= t.Turtle()
+pen.speed(0)
+pen.color("White")
+pen.penup()
+pen.hideturtle()
+pen.goto(0,260)
+pen.write("score", align="center",font=('Times New Roman',24,'normal'))
+
+#moving the leftpaddle
+
+# ...
+
+def leftpaddleup():
+    y = leftpaddle.ycor()
+    if y < 250:  # Add boundary check
+        y += 90
+        leftpaddle.sety(y)
+
+def leftpaddledown():
+    y = leftpaddle.ycor()
+    if y > -240:  # Add boundary check
+        y -= 90
+        leftpaddle.sety(y)
+
+def rightpaddleup():
+    y = rightpaddle.ycor()
+    if y < 250:  # Add boundary check
+        y += 90
+        rightpaddle.sety(y)
+
+def rightpaddledown():
+    y = rightpaddle.ycor()
+    if y > -240:  # Add boundary check
+        y -= 90
+        rightpaddle.sety(y)
+
+# ...
+
+
+#Assign keys to play
+
+window.listen()
+window.onkeypress(leftpaddleup,'w')
+window.onkeypress(leftpaddledown,'s')
+window.onkeypress(rightpaddleup,'Up')
+window.onkeypress(rightpaddledown,'Down')
+
+while True:
+    window.update()
+
+    # Moving the ball
+    ball.setx(ball.xcor() + ballxdirection)
+    ball.sety(ball.ycor() + ballydirection)
+
+    # Setup border
+
+    # Ball collision with top boundary
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ballydirection = ballydirection * -1
+
+    # Ball collision with bottom boundary
+    if ball.ycor() < -290:
+        ball.sety(-290)
+        ballydirection = ballydirection * -1
+
+    # Ball crosses right boundary - Player A scores
+    if ball.xcor() > 390:
+        ball.goto(0, 0)
+        ballxdirection = ballxdirection * -1  # Reverse ball direction
+        playerAscore += 1
+        pen.clear()
+        pen.write("Player A:{}   Player B: {}".format(playerAscore, playerBscore), align='center', font=('Times New Roman', 24, 'normal'))
+
+    # Ball crosses left boundary - Player B scores
+    if ball.xcor() < -390:
+        ball.goto(0, 0)
+        ballxdirection = ballxdirection * -1  # Reverse ball direction
+        playerBscore += 1
+        pen.clear()
+        pen.write("Player A:{}   Player B: {}".format(playerAscore, playerBscore), align='center', font=('Times New Roman', 24, 'normal'))
+
+    # Handling the collisions with paddles
+
+    # Ball collision with right paddle
+    if (ball.xcor() > 340) and (ball.xcor() < 350) and (ball.ycor() < rightpaddle.ycor() + 50) and (ball.ycor() > rightpaddle.ycor() - 50):
+        ball.setx(340)
+        ballxdirection = ballxdirection * -1
+
+    # Ball collision with left paddle
+    if (ball.xcor() < -340) and (ball.xcor() > -350) and (ball.ycor() < leftpaddle.ycor() + 50) and (ball.ycor() > leftpaddle.ycor() - 50):
+        ball.setx(-340)
+        ballxdirection = ballxdirection * -1
+
+
+
+
